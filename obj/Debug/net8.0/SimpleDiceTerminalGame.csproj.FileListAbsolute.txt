@@ -1,0 +1,14 @@
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\bin\Debug\net8.0\SimpleDiceTerminalGame.exe
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\bin\Debug\net8.0\SimpleDiceTerminalGame.deps.json
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\bin\Debug\net8.0\SimpleDiceTerminalGame.runtimeconfig.json
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\bin\Debug\net8.0\SimpleDiceTerminalGame.dll
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\bin\Debug\net8.0\SimpleDiceTerminalGame.pdb
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\obj\Debug\net8.0\SimpleDiceTerminalGame.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\obj\Debug\net8.0\SimpleDiceTerminalGame.AssemblyInfoInputs.cache
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\obj\Debug\net8.0\SimpleDiceTerminalGame.AssemblyInfo.cs
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\obj\Debug\net8.0\SimpleDiceTerminalGame.csproj.CoreCompileInputs.cache
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\obj\Debug\net8.0\SimpleDiceTerminalGame.dll
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\obj\Debug\net8.0\refint\SimpleDiceTerminalGame.dll
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\obj\Debug\net8.0\SimpleDiceTerminalGame.pdb
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\obj\Debug\net8.0\SimpleDiceTerminalGame.genruntimeconfig.cache
+C:\Users\ulise\Desktop\c# cert freecodecamp\CsharpProjects\SimpleDiceTerminalGame\obj\Debug\net8.0\ref\SimpleDiceTerminalGame.dll
