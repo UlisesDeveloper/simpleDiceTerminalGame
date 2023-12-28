@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ulise\\Desktop\\c# cert freecodecamp\\CsharpProjects\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj": {}
+    "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ulise\\Desktop\\c# cert freecodecamp\\CsharpProjects\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj": {
+    "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ulise\\Desktop\\c# cert freecodecamp\\CsharpProjects\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj",
+        "projectUniqueName": "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj",
         "projectName": "SimpleDiceTerminalGame",
-        "projectPath": "C:\\Users\\ulise\\Desktop\\c# cert freecodecamp\\CsharpProjects\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj",
+        "projectPath": "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj",
         "packagesPath": "C:\\Users\\ulise\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ulise\\Desktop\\c# cert freecodecamp\\CsharpProjects\\SimpleDiceTerminalGame\\obj\\",
+        "outputPath": "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

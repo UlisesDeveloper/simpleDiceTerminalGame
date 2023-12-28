@@ -7,17 +7,130 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        Console.WriteLine("Program made by Ulises");
+        Console.WriteLine("MIT License Copyright (c) 2023 Ulises Romero López");
+        Console.WriteLine("website: https://ulises.tech");
+        Console.WriteLine("reddit: https:/reddit.com/user/ulisesdeveloper");
+        Console.WriteLine($"twitter: https:/x.com/ulisesdev \n \n \n");
+        Thread.Sleep(1000);
+
         while (true)
         {
-            Console.WriteLine("TYPE EITHER \"DICE\" OR \"COIN\" TO CHOOSE WHICH GAME TO PLAY (OR \"EXIT\" IF YOU WANT TO LEAVE):");
+            Console.WriteLine("TYPE EITHER \"DICE\" OR \"COIN\" TO CHOOSE WHICH GAME TO PLAY // OR \"OTHER\" TO EXIT OR VIEW OTHER OPTIONS");
             string userInput = Console.ReadLine().ToUpper(); // Read user input and convert to uppercase
 
-            if (userInput == "EXIT")
+            if (userInput == "OTHER")
             {
-                Environment.Exit(1);
+                Console.Clear();
+                bool otherOption = true;
+                while (otherOption)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("What do you wish to do?,");
+                    Console.WriteLine("- BACK (Go back to the main menu)");
+                    Console.WriteLine("- LICENSE (View License)");
+                    Console.WriteLine("- CREDITS (View Credits)");
+                    Console.WriteLine("- EXIT (Exit the Program)");
+                    Console.WriteLine("\nType in your option: ");
+
+                    string innerInput = Console.ReadLine().ToUpper(); // Capture the user's choice inside the loop
+                    if (innerInput == "BACK")
+                    {
+                    Thread.Sleep(200);
+                    otherOption = false;
+                    }
+                    if (innerInput == "LICENSE")
+                    {
+                        bool licenseBack = true;
+                        Console.Clear();
+                        Console.WriteLine("\n\n");
+                        Console.WriteLine(@"
+                         
+                         MIT License
+
+                         Copyright (c) 2023 Ulises Romero López
+
+                         Permission is hereby granted, free of charge, to any person obtaining a copy
+                         of this software and associated documentation files (the ""Software""), to deal
+                         in the Software without restriction, including without limitation the rights
+                         to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                         copies of the Software, and to permit persons to whom the Software is
+                         furnished to do so, subject to the following conditions:
+
+                         The above copyright notice and this permission notice shall be included in all
+                         copies or substantial portions of the Software.
+
+                         THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                         IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                         FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                         AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                         LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                         OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                         SOFTWARE. ");
+
+                         Console.WriteLine("\n\n\n");
+                         Thread.Sleep(500);
+                        while(licenseBack)
+                        {
+                         Console.WriteLine();
+                         Console.WriteLine("Type in \"BACK\" to go back: ");
+                         string input = Console.ReadLine();
+                         if (input == "BACK")
+                         {
+                            Console.Clear();
+                            licenseBack = false;
+                         }
+                         else
+                         {
+                            
+                            Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
+                         }
+
+                        }
+                    }
+                    if (innerInput == "CREDITS")
+                    { 
+                        Console.Clear();
+                        bool creditsBack = true;
+                        Console.WriteLine("\n\n");
+
+                        Console.WriteLine("Program made by Ulises");
+                        Console.WriteLine("website: https://ulises.tech");
+                        Console.WriteLine("reddit: https:/reddit.com/user/ulisesdeveloper");
+                        Console.WriteLine($"twitter: https:/x.com/ulisesdev \n \n \n");
+                        Thread.Sleep(500);
+                        while(creditsBack)
+                        {
+                        Console.WriteLine();
+                        Console.WriteLine("Type in \"BACK\" to go back: ");
+                         if (Console.ReadLine() == "BACK")
+                         {
+                            Console.Clear();
+                            creditsBack = false;
+                         }
+                         else
+                         {
+                            
+                            Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
+                         }
+
+                        }
+                    }
+                    if (innerInput == "EXIT")
+                    {
+                        Environment.Exit(1);
+                    }
+
+                 Console.Clear();
+
+                }
+
+
             }
             else if (userInput == "COIN")
             {
+                Console.Clear();
                 bool repeat = true;
                 string coinGuess = "";
 
@@ -31,11 +144,12 @@ internal class Program
 
                     if (coinGuess == "BACK")
                     {
+                        Console.Clear();
                         repeat = false;
                     }
                     else if (coinGuess == "HEADS" || coinGuess == "TAILS")
                     {
-                        Console.WriteLine($"And it is...");
+                        Console.WriteLine($"\n\nAnd it is...");
                         Thread.Sleep(1000); // 1 second pause
                         Console.WriteLine("...");
                         Thread.Sleep(1000); // 1 second pause
@@ -44,7 +158,7 @@ internal class Program
                         {
                             Console.WriteLine((flip == 1) ? "HEADS!!!" : "TAILS!!!");
                             Console.BackgroundColor = ConsoleColor.DarkGreen;
-                            Thread.Sleep(333); 
+                            Thread.Sleep(333);
                             Console.WriteLine("You won :D");
                             Console.ResetColor();
                         }
@@ -67,6 +181,7 @@ internal class Program
             }
             else if (userInput == "DICE")
             {
+                Console.Clear();
                 Random dice = new Random();
                 int dice1 = dice.Next(1, 7);
                 int dice2 = dice.Next(1, 7);
@@ -142,6 +257,7 @@ internal class Program
 
             Console.ResetColor();
             Console.WriteLine();
+            //that's it
         }
     }
 }
