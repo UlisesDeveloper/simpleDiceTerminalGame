@@ -37,8 +37,8 @@ internal class Program
                     string innerInput = Console.ReadLine().ToUpper(); // Capture the user's choice inside the loop
                     if (innerInput == "BACK")
                     {
-                    Thread.Sleep(200);
-                    otherOption = false;
+                        Thread.Sleep(200);
+                        otherOption = false;
                     }
                     if (innerInput == "LICENSE")
                     {
@@ -69,28 +69,28 @@ internal class Program
                          OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
                          SOFTWARE. ");
 
-                         Console.WriteLine("\n\n\n");
-                         Thread.Sleep(500);
-                        while(licenseBack)
+                        Console.WriteLine("\n\n\n");
+                        Thread.Sleep(500);
+                        while (licenseBack)
                         {
-                         Console.WriteLine();
-                         Console.WriteLine("Type in \"BACK\" to go back: ");
-                         string input = Console.ReadLine();
-                         if (input == "BACK")
-                         {
-                            Console.Clear();
-                            licenseBack = false;
-                         }
-                         else
-                         {
-                            
-                            Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
-                         }
+                            Console.WriteLine();
+                            Console.WriteLine("Type in \"BACK\" to go back: ");
+                            string input = Console.ReadLine();
+                            if (input == "BACK")
+                            {
+                                Console.Clear();
+                                licenseBack = false;
+                            }
+                            else
+                            {
+
+                                Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
+                            }
 
                         }
                     }
                     if (innerInput == "CREDITS")
-                    { 
+                    {
                         Console.Clear();
                         bool creditsBack = true;
                         Console.WriteLine("\n\n");
@@ -100,20 +100,20 @@ internal class Program
                         Console.WriteLine("reddit: https:/reddit.com/user/ulisesdeveloper");
                         Console.WriteLine($"twitter: https:/x.com/ulisesdev \n \n \n");
                         Thread.Sleep(500);
-                        while(creditsBack)
+                        while (creditsBack)
                         {
-                        Console.WriteLine();
-                        Console.WriteLine("Type in \"BACK\" to go back: ");
-                         if (Console.ReadLine() == "BACK")
-                         {
-                            Console.Clear();
-                            creditsBack = false;
-                         }
-                         else
-                         {
-                            
-                            Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
-                         }
+                            Console.WriteLine();
+                            Console.WriteLine("Type in \"BACK\" to go back: ");
+                            if (Console.ReadLine() == "BACK")
+                            {
+                                Console.Clear();
+                                creditsBack = false;
+                            }
+                            else
+                            {
+
+                                Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
+                            }
 
                         }
                     }
@@ -122,7 +122,7 @@ internal class Program
                         Environment.Exit(1);
                     }
 
-                 Console.Clear();
+                    Console.Clear();
 
                 }
 
@@ -249,6 +249,90 @@ internal class Program
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ResetColor();
                 Console.WriteLine();  //console color reset, sometimes it's buggy and it doesn't reset fully
+            }
+            else if (userInput == "BLACKJACK")
+            {
+                cardGen();
+                void cardGen()
+                {
+
+                    string[] cards = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+                    Random random = new Random();
+                    int numCardPulled = random.Next(cards.Length);
+                    int cardPulled = 0;
+                    switch (numCardPulled)
+                    {
+                        case 1:
+                            {
+                                cardPulled = 1;
+                                break;
+                            }
+                        case 2:
+                            {
+                                cardPulled = 2;
+                                break;
+                            }
+                        case 3:
+                            {
+                                cardPulled = 3;
+                                break;
+                            }
+                        case 4:
+                            {
+                                cardPulled = 4;
+                                break;
+                            }
+                        case 5:
+                            {
+                                cardPulled = 5;
+                                break;
+                            }
+                        case 6:
+                            {
+                                cardPulled = 6;
+                                break;
+                            }
+                        case 7:
+                            {
+                                cardPulled = 7;
+                                break;
+                            }
+                        case 8:
+                            {
+                                cardPulled = 8;
+                                break;
+                            }
+                        case 9:
+                            {
+                                cardPulled = 9;
+                                break;
+                            }
+                        case 10:
+                            {
+                                cardPulled = 10;
+                                break;
+                            }
+                        case 11:
+                            {
+                                cardPulled = 10;
+                                break;
+                            }
+                        case 12:
+                            {
+                                cardPulled = 10;
+                                break;
+                            }
+                        case 13:
+                            {
+                                cardPulled = 0;
+                                break;
+                            }
+
+                    }
+                    Console.WriteLine(cardPulled);
+
+
+                }
             }
             else
             {
