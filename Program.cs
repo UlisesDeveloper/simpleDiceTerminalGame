@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Drawing;
 using System.Runtime.Serialization;
+using System.Data.Common;
+using System.Media;
 
 internal class Program
 {
@@ -16,7 +18,7 @@ internal class Program
 
         while (true)
         {
-            Console.WriteLine("TYPE EITHER \"DICE\" OR \"COIN\" TO CHOOSE WHICH GAME TO PLAY // OR \"OTHER\" TO EXIT OR VIEW OTHER OPTIONS");
+            Console.WriteLine("TYPE EITHER \"DICE\", \"COIN\" OR \"BLACKJACK\" TO CHOOSE WHICH GAME TO PLAY // OR \"OTHER\" TO EXIT OR VIEW OTHER OPTIONS");
             string userInput = Console.ReadLine().ToUpper(); // Read user input and convert to uppercase
 
             if (userInput == "OTHER")
@@ -99,6 +101,11 @@ internal class Program
                         Console.WriteLine("website: https://ulises.tech");
                         Console.WriteLine("reddit: https:/reddit.com/user/ulisesdeveloper");
                         Console.WriteLine($"twitter: https:/x.com/ulisesdev \n \n \n");
+                        Console.WriteLine("Casino Music:");
+                        Console.WriteLine("Gotta Go by Tokyo Music Walker | https://soundcloud.com/user-356546060");
+                        Console.WriteLine("Music promoted by https://www.free-stock-music.com");
+                        Console.WriteLine("Creative Commons / Attribution 3.0 Unported License (CC BY 3.0)");
+                        Console.WriteLine("https://creativecommons.org/licenses/by/3.0/deed.en_US");
                         Thread.Sleep(500);
                         while (creditsBack)
                         {
@@ -252,11 +259,152 @@ internal class Program
             }
             else if (userInput == "BLACKJACK")
             {
-                cardGen();
-                void cardGen()
-                {
+                CasinoMusic("tokyo-music-walker-gotta-go.wav");
 
-                    string[] cards = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+                string[] cards = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+                int number = 0;
+                int dealerTotal = 0;
+                int playerTotal = 0;
+                while (true)
+                {
+                    Console.Clear();
+                    decimal wallet = 100;
+
+                    Console.WriteLine("Type \"Y\" to Play or \"N\" to go back to the Main Menu");
+                    string? replay = Console.ReadLine().ToUpper();
+
+                    if (replay == "Y")
+                    {
+                        Console.WriteLine("Welcome to the Casino, It's BlackJack Time! Place your bets");
+                        while (true)
+                        {
+                            Console.WriteLine($"Balance: ${wallet}");
+                            string input = Console.ReadLine();
+                            decimal bet;
+
+                            while (true)
+                            {
+
+                                if (decimal.TryParse(input, out bet))
+                                {
+                                    Console.WriteLine($"Bet: ${bet}");
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Input a valid value:");
+                                }
+                            }
+
+
+
+
+                        }
+                    }
+                    else if (replay == "N")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Input Not Recognized try again");
+                    }
+
+
+                }
+
+                void CasinoMusic(string filepath)
+                {
+                    SoundPlayer musicPlayer = new SoundPlayer();
+                    musicPlayer.SoundLocation = filepath;
+                    musicPlayer.Play();
+                }
+
+
+
+
+
+                void game()
+                {
+                    pulledDealer();
+                    Console.WriteLine($"Dealer's shown card is {dealerTotal}");
+                    pulledDealer();
+                    pulledPlayer();
+                    pulledPlayer();
+                    Console.WriteLine($"Your starting total is {playerTotal}");
+                    Console.WriteLine("Choose between \"HIT\"");
+                    string? userDecision = Console.ReadLine().ToUpper();
+                    while (playerTotal <= 21)
+                    {
+                        if (userDecision == "HIT")
+                        {
+                            pulledPlayer();
+                            Console.WriteLine($"Your total is {playerTotal}");
+
+
+                        }
+                        else if (userDecision == "STAND")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Input not recognized, try again");
+                        }
+
+
+                    }
+                    while (dealerTotal <= 16)
+                    {
+                        pulledDealer();
+                    }
+                }
+
+                void pulledDealer()
+                {
+                    int pull = 0;
+                    number = cardGen();
+                    if (number == 0)
+                    {
+                        if (dealerTotal == 10)
+                        {
+                            dealerTotal += 11;
+                        }
+                        else
+                        {
+                            dealerTotal += 1;
+                        }
+                        pull = 1;
+                    }
+                    else
+                    {
+                        dealerTotal += number;
+                    }
+
+                }
+                void pulledPlayer()
+                {
+                    int pull = 0;
+                    number = cardGen();
+                    if (number == 0)
+                    {
+                        if (playerTotal <= 10)
+                        {
+                            playerTotal += 11;
+                        }
+                        else
+                        {
+                            playerTotal += 1;
+                        }
+                    }
+                    else
+                    {
+                        playerTotal += number;
+                    }
+
+                }
+                int cardGen()
+                {
                     Random random = new Random();
                     int numCardPulled = random.Next(cards.Length);
                     int cardPulled = 0;
@@ -329,10 +477,10 @@ internal class Program
                             }
 
                     }
-                    Console.WriteLine(cardPulled);
-
+                    return cardPulled;
 
                 }
+
             }
             else
             {
