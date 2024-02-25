@@ -42,3 +42,11 @@ C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\obj\Debug\net8.0\refint\
 C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\obj\Debug\net8.0\SimpleDiceTerminalGame.pdb
 C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\obj\Debug\net8.0\SimpleDiceTerminalGame.genruntimeconfig.cache
 C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\obj\Debug\net8.0\ref\SimpleDiceTerminalGame.dll
+C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\bin\Debug\net8.0\NAudio.dll
+C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\bin\Debug\net8.0\NAudio.Asio.dll
+C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\bin\Debug\net8.0\NAudio.Core.dll
+C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\bin\Debug\net8.0\NAudio.Midi.dll
+C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\bin\Debug\net8.0\NAudio.Wasapi.dll
+C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\bin\Debug\net8.0\NAudio.WinMM.dll
+C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\obj\Debug\net8.0\SimpleDiceTerminalGame.csproj.AssemblyReference.cache
+C:\Users\ulise\Documents\GitHub\simpleTerminalLuckGames\obj\Debug\net8.0\SimpleDiceTerminalGame.csproj.CopyComplete

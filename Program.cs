@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.Serialization;
 using System.Data.Common;
 using System.Media;
+using NAudio.Wave;
 
 internal class Program
 {
@@ -259,7 +260,8 @@ internal class Program
             }
             else if (userInput == "BLACKJACK")
             {
-                CasinoMusic("tokyo-music-walker-gotta-go.wav");
+                Thread audioThread = new Thread(PlayAudio);
+                audioThread.Start();
 
                 string[] cards = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
                 int number = 0;
@@ -313,14 +315,23 @@ internal class Program
 
                 }
 
-                void CasinoMusic(string filepath)
+
+
+                static void PlayAudio()
                 {
-                    SoundPlayer musicPlayer = new SoundPlayer();
-                    musicPlayer.SoundLocation = filepath;
-                    musicPlayer.Play();
+                    using (var audioFile = new Mp3FileReader("tokyo-music-walker-gotta-go.mp3"))
+                    using (var outputDevice = new WaveOutEvent())
+                    {
+                        outputDevice.Init(audioFile);
+                        outputDevice.Play();
+
+                        // Wait for audio playback to finish
+                        while (outputDevice.PlaybackState == PlaybackState.Playing)
+                        {
+                            Thread.Sleep(100);
+                        }
+                    }
                 }
-
-
 
 
 
