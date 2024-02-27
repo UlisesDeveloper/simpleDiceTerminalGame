@@ -267,12 +267,13 @@ internal class Program
                 int number = 0;
                 int dealerTotal = 0;
                 int playerTotal = 0;
+                decimal bet = 0;
+                decimal wallet = 100;
                 while (true)
                 {
                     Console.Clear();
-                    decimal wallet = 100;
 
-                    Console.WriteLine("Type \"Y\" to Play or \"N\" to go back to the Main Menu");
+                    Console.WriteLine("Type \"Y\" to enter the casino or \"N\" to go back to the Main Menu");
                     string? replay = Console.ReadLine().ToUpper();
 
                     if (replay == "Y")
@@ -281,27 +282,37 @@ internal class Program
                         while (true)
                         {
                             Console.WriteLine($"Balance: ${wallet}");
-                            string input = Console.ReadLine();
-                            decimal bet;
+                            Console.WriteLine($"Input your bet:");
+                            bool betCondition = true;
 
-                            while (true)
+                            while (betCondition)
                             {
-
+                                string input = Console.ReadLine();
                                 if (decimal.TryParse(input, out bet))
                                 {
-                                    Console.WriteLine($"Bet: ${bet}");
-                                    break;
+                                    if (wallet > bet)
+                                    {
+                                        Console.WriteLine($"inputted bet: ${bet}");
+                                        betCondition = false;
+
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Bet can't be bigger than ur wallet's balance");
+                                        bet = 0;
+                                        Console.WriteLine("Input a valid bet:");
+                                    }
                                 }
                                 else
                                 {
                                     Console.WriteLine("Input a valid value:");
                                 }
                             }
+                            game();
 
-
-
-
+                    
                         }
+                        
                     }
                     else if (replay == "N")
                     {
@@ -309,7 +320,7 @@ internal class Program
                     }
                     else
                     {
-                        Console.WriteLine("Input Not Recognized try again");
+                        Console.WriteLine("Input Not Recognized, try again:");
                     }
 
 
@@ -343,31 +354,55 @@ internal class Program
                     pulledPlayer();
                     pulledPlayer();
                     Console.WriteLine($"Your starting total is {playerTotal}");
-                    Console.WriteLine("Choose between \"HIT\"");
-                    string? userDecision = Console.ReadLine().ToUpper();
                     while (playerTotal <= 21)
                     {
+                        Console.WriteLine("Choose between \"HIT\" and \"STAND\"");
+                        string? userDecision = Console.ReadLine().ToUpper();
                         if (userDecision == "HIT")
                         {
                             pulledPlayer();
                             Console.WriteLine($"Your total is {playerTotal}");
-
-
                         }
                         else if (userDecision == "STAND")
                         {
-                            break;
+                            break; //fix when stand is chosen it goes back to bets menu
                         }
                         else
                         {
-                            Console.WriteLine("Input not recognized, try again");
+                            while (true)
+                            {
+                                Console.WriteLine("Input not recognized, try again");
+                                break;
+                            }
                         }
 
 
                     }
+
+                    if(playerTotal > 21)
+                    {
+                        Console.WriteLine("You lose!");
+                        return;
+                    }
+
                     while (dealerTotal <= 16)
                     {
                         pulledDealer();
+                        if (pulledDealer == pulledPlayer)
+                        {
+                            Console.WriteLine("Draw");
+                        }
+                        else if (dealerTotal > 21)
+                        {
+                            Console.WriteLine("DEALER BUST");
+                            wallet += bet;
+                        }
+
+                    }
+                    if (playerTotal > dealerTotal)
+                    {
+                        Console.WriteLine("You win!");
+                        return;
                     }
                 }
 
