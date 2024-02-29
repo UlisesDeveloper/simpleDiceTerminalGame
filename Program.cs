@@ -19,7 +19,7 @@ internal class Program
                          website: https://ulises.tech
                          reddit: https:/reddit.com/user/ulisesdeveloper
                          twitter: https:/x.com/ulisesdev");
-        Thread.Sleep(5000);
+        Thread.Sleep(3500);
         Console.Clear();
 
         while (true)
@@ -382,11 +382,11 @@ internal class Program
                 {
                     Console.Clear();
                     Console.WriteLine($"Balance: ${wallet} // Current Bet: ${bet} \n");
-                    pulledDealer();
+                    pulledCard(ref dealerTotal);
                     Console.WriteLine($"Dealer's shown card is {dealerTotal}");
-                    pulledDealer();
-                    pulledPlayer();
-                    pulledPlayer();
+                    pulledCard(ref dealerTotal);
+                    pulledCard(ref playerTotal);
+                    pulledCard(ref playerTotal);
                     Console.WriteLine($"Your starting total is {playerTotal} \n");
                     while (playerTotal <= 21)
                     {
@@ -394,7 +394,7 @@ internal class Program
                         string? userDecision = Console.ReadLine().ToUpper();
                         if (userDecision == "HIT")
                         {
-                            pulledPlayer();
+                            pulledCard(ref playerTotal);
                             Console.WriteLine($"Your total is {playerTotal}");
                         }
                         else if (userDecision == "STAND")
@@ -402,7 +402,6 @@ internal class Program
                             Console.Clear();
                             Console.WriteLine($"Balance: ${wallet} // Current Bet: ${bet} // Your Total: {playerTotal} \n");
                             Console.WriteLine($"DEALER SHOWS HIS SECOND CARD, his new total is... {dealerTotal}");
-                            Thread.Sleep(1000);
                             break;
                         }
                         else
@@ -423,6 +422,7 @@ internal class Program
                     {
                         Console.WriteLine("You lose!");
                         wallet -= bet;
+                        Thread.Sleep(1500);
                         resetValues();
                     }
                     else
@@ -430,12 +430,20 @@ internal class Program
 
                         while (dealerTotal <= 16)
                         {
-                            pulledDealer();
+                            pulledCard(ref dealerTotal);
                             Console.WriteLine($"Dealer get's a new card, and he's total is... {dealerTotal}");
                             if (playerTotal == dealerTotal)
                             {
-                                Console.WriteLine("It's a Draw");
+                                Console.WriteLine("It's a Draw!");
                                 resetValues();
+                                Thread.Sleep(1500);
+                                Console.WriteLine("GOING BACK TO THE MENU IN 3");
+                                Thread.Sleep(1500);
+                                Console.WriteLine("GOING BACK TO THE MENU IN 2");
+                                Thread.Sleep(1500);
+                                Console.WriteLine("GOING BACK TO THE MENU IN 1");
+                                Thread.Sleep(1500);
+                                Console.Clear();
                                 break;
                             }
                             else if (dealerTotal > 21)
@@ -462,44 +470,31 @@ internal class Program
                         {
                             Console.WriteLine("You win!");
                             wallet += bet;
+                            Thread.Sleep(1500);
                             resetValues();
                         }
                         else if (dealerTotal > playerTotal)
                         {
                             Console.WriteLine("You lose!");
                             wallet -= bet;
+                            Thread.Sleep(1500);
                             resetValues();
                         }
                         resetValues();
                     }
                 }
 
-                void pulledDealer()
+                void pulledCard(ref int total)
                 {
                     number = cardGen();
                     if (number == 0)
                     {
-                        dealerTotal = (dealerTotal <= 10) ? dealerTotal += 11 : dealerTotal += 1;
+                        total = (total <= 10) ? total += 11 : total += 1;
                     }
                     else
                     {
-                        dealerTotal += number;
+                        total += number;
                     }
-
-                }
-                void pulledPlayer()
-                {
-
-                    number = cardGen();
-                    if (number == 0)
-                    {
-                        playerTotal = (playerTotal <= 10) ? playerTotal += 11 : playerTotal += 1;
-                    }
-                    else
-                    {
-                        playerTotal += number;
-                    }
-
                 }
                 int cardGen()
                 {
