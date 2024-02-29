@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Data.Common;
 using System.Media;
 using NAudio.Wave;
+using NAudio.Wave.Asio;
 
 internal class Program
 {
@@ -12,6 +13,8 @@ internal class Program
     private static bool isPlaying = true;
     private static void Main(string[] args)
     {
+        Console.WindowWidth = 120;
+        Console.WindowHeight = 35;
         Console.Clear();
         Console.WriteLine(@"
                          Program made by Ulises
@@ -24,10 +27,27 @@ internal class Program
 
         while (true)
         {
-            Console.WriteLine("TYPE EITHER \"DICE\", \"COIN\" OR \"BLACKJACK\" TO CHOOSE WHICH GAME TO PLAY // OR \"OTHER\" TO EXIT OR VIEW OTHER OPTIONS");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("GAMES: \n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("1) DICE                          Game where you try to achieve 15 with 3 dice, try getting bonuses");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("2) COIN                          The classic coinflip game!");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("3) BLACKJACK                     The greatest casino hit!");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("4) ROCK PAPER SCISSORS           Rock Paper Scissors, It doesn't get easier than that\n\n");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("EVERYTHING ELSE: \n");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("5) OTHER                         Submenu to EXIT and view the Credits or License\n\n\n");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine("Type in a NUMBER to travel to that option:");
+            
             string userInput = Console.ReadLine().ToUpper(); // Read user input and convert to uppercase
 
-            if (userInput == "OTHER")
+            if (userInput == "5")
             {
                 Console.Clear();
                 bool otherOption = true;
@@ -143,7 +163,7 @@ internal class Program
 
 
             }
-            else if (userInput == "COIN")
+            else if (userInput == "2")
             {
                 Console.Clear();
                 bool repeat = true;
@@ -194,18 +214,19 @@ internal class Program
                     Console.WriteLine();
                 }
             }
-            else if (userInput == "DICE")
+            else if (userInput == "1")
             {
                 Console.Clear();
                 Random dice = new Random();
                 int dice1 = dice.Next(1, 7);
                 int dice2 = dice.Next(1, 7);
                 int dice3 = dice.Next(1, 7);
-
+                Thread.Sleep(400);
                 Console.Write($"First die: {dice1} / Second die: {dice2} / Third die: {dice3}\n");
-
+                Thread.Sleep(1000);
                 int total = dice1 + dice2 + dice3;
                 Console.WriteLine($"The result of the sum of all dice without bonuses is {total}");
+                Thread.Sleep(2500);
 
                 if (dice1 == dice2 || dice1 == dice3 || dice2 == dice3)
                 {
@@ -263,9 +284,12 @@ internal class Program
 
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ResetColor();
+                Console.WriteLine("Type in anything to go back to the main menu:");
+                string wait = Console.ReadLine();
                 Console.WriteLine();  //console color reset, sometimes it's buggy and it doesn't reset fully
+                Console.Clear();
             }
-            else if (userInput == "BLACKJACK")
+            else if (userInput == "3")
             {
                 Thread audioThread = new Thread(PlayCasinoAudio);
 
@@ -580,13 +604,118 @@ internal class Program
                 }
 
             }
-            else if (userInput == "RPS")
+            else if (userInput == "4")
             {
-                Console.WriteLine("wip");
+                int playerWon = 0;
+                int cpuWon = 0;
+                while (true)
+                {
+                    Console.Clear();
+                    int elementGen = 33;
+
+                    counter();
+                    Console.WriteLine("Type \"BACK\" to go Back or");
+                    Console.WriteLine("Choose between \"R\" for Rock \"P\" for Paper or \"S\" for Scissors:");
+                    string input = Console.ReadLine().ToUpper();
+                    if (input == "R")
+                    {
+                        Console.Clear();
+                        counter();
+                        Console.WriteLine("You chose ROCK");
+                        gameResult();
+                    }
+                    else if (input == "P")
+                    {
+                        Console.Clear();
+                        counter();
+                        Console.WriteLine("You chose PAPER");
+                        gameResult();
+                    }
+                    else if (input == "S")
+                    {
+                        Console.Clear();
+                        counter();
+                        Console.WriteLine("You chose SCISSORS");
+                        gameResult();
+                    }
+                    else if (input == "B" || input == "BACK")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Input not recognized, Try Again!");
+                        Thread.Sleep(1600);
+                        Console.Clear();
+                    }
+
+
+                    void counter()
+                    {
+                        Console.WriteLine($"Matches Won {playerWon} / Matches Lost {cpuWon}\n");
+                    }
+
+                    void gameResult()
+                    {
+                        bool goBack = true;
+                        Console.WriteLine("The results are in...");
+                        Thread.Sleep(1000);
+                        cpuPick();
+                        Thread.Sleep(1500);
+                        Console.WriteLine();
+                        if (((input == "R") && (elementGen == 2)) || ((input == "P") && (elementGen == 0)) || ((input == "S") && (elementGen == 1)))
+                        {
+                            Console.WriteLine("You WIN! :D\n");
+                            playerWon++;
+                        }
+                        else if (((input == "R") && (elementGen == 0)) || ((input == "P") && (elementGen == 1)) || ((input == "S") && (elementGen == 2)))
+                        {
+                            Console.WriteLine($"You both chose {input}, It's a DRAW!\n");
+                        }
+                        else if (((input == "R") && (elementGen == 1)) || ((input == "P") && (elementGen == 2)) || ((input == "S") && (elementGen == 0)))
+                        {
+                            Console.WriteLine("You LOST! :(\n");
+                            cpuWon++;
+                        }
+                        while (goBack)
+                        {
+                            Console.WriteLine("Type in \"B\" to go back to the Rock Paper Scissors Menu: ");
+                            string inputed = Console.ReadLine().ToUpper();
+                            if (inputed == "B")
+                            {
+                                goBack = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Input not recognized, Try Again!");
+                            }
+                        }
+                        void cpuPick()
+                        {
+                            Random random = new Random();
+                            elementGen = random.Next(0, 2);
+                            if (elementGen == 0)
+                            {
+                                Console.WriteLine("The CPU chooses Rock!");
+                            }
+                            else if (elementGen == 1)
+                            {
+                                Console.WriteLine("The CPU chooses Paper!");
+                            }
+                            else if (elementGen == 2)
+                            {
+                                Console.WriteLine("The CPU chooses Scissors!");
+                            }
+                        }
+                    }
+
+                }
+                Console.Clear();
 
             }
             else
             {
+                Console.WriteLine();
                 Console.WriteLine("INPUT NOT RECOGNIZED, TRY TYPING IN UPPERCASE");
             }
 
