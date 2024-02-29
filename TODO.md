@@ -1,2 +1,6 @@
 - Fix Bug when exiting and reentering BlackJack where the music doesn't start playing
 - Fix the UI a bit, it's quite ugly tbh
+- Fix display where it says bet and balance where the balance doesn't get substracted from the menu, later on where the game finishes the change can be seen but while choosing to stand or bet or whatever the change isn't reflected and you see your balance before betting + the bet currently happening 
+- Add matches won and lost gui at the top to coinflip and die game
+- Add instructions / guides menu in the OTHER menu
+- Fix formatting on die game
