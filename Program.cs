@@ -268,7 +268,7 @@ internal class Program
             else if (userInput == "BLACKJACK")
             {
                 Thread audioThread = new Thread(PlayCasinoAudio);
-                
+
                 audioThread.Start();
 
                 string[] cards = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
@@ -340,7 +340,7 @@ internal class Program
 
                 static void PlayCasinoAudio()
                 {
-                    
+
                     using (var audioFile = new Mp3FileReader("tokyo-music-walker-gotta-go.mp3"))
                     using (var outputDevice = new WaveOutEvent())
                     {
@@ -368,7 +368,7 @@ internal class Program
                     isPlaying = false; //Stop playback loop
                     if (outputDevice != null)
                     {
-                        
+
                         outputDevice.Stop();
                         outputDevice.Dispose();
                     }
@@ -402,6 +402,7 @@ internal class Program
                             Console.Clear();
                             Console.WriteLine($"Balance: ${wallet} // Current Bet: ${bet} // Your Total: {playerTotal} \n");
                             Console.WriteLine($"DEALER SHOWS HIS SECOND CARD, his new total is... {dealerTotal}");
+                            Thread.Sleep(1000);
                             break;
                         }
                         else
@@ -442,13 +443,13 @@ internal class Program
                                 Console.WriteLine("DEALER BUST, You Win! \n");
                                 wallet += bet;
                                 resetValues();
-                                Thread.Sleep(3000);
+                                Thread.Sleep(4000);
                                 Console.WriteLine("GOING BACK TO THE MENU IN 3");
-                                Thread.Sleep(1000);
+                                Thread.Sleep(1500);
                                 Console.WriteLine("GOING BACK TO THE MENU IN 2");
-                                Thread.Sleep(1000);
+                                Thread.Sleep(1500);
                                 Console.WriteLine("GOING BACK TO THE MENU IN 1");
-                                Thread.Sleep(1000);
+                                Thread.Sleep(1500);
                                 Console.Clear();
                                 resetValues();
                                 break;
@@ -475,19 +476,10 @@ internal class Program
 
                 void pulledDealer()
                 {
-                    int pull = 0;
                     number = cardGen();
                     if (number == 0)
                     {
-                        if (dealerTotal == 10)
-                        {
-                            dealerTotal += 11;
-                        }
-                        else
-                        {
-                            dealerTotal += 1;
-                        }
-                        pull = 1;
+                        dealerTotal = (dealerTotal <= 10) ? dealerTotal += 11 : dealerTotal += 1;
                     }
                     else
                     {
@@ -497,18 +489,11 @@ internal class Program
                 }
                 void pulledPlayer()
                 {
-                    int pull = 0;
+
                     number = cardGen();
                     if (number == 0)
                     {
-                        if (playerTotal <= 10)
-                        {
-                            playerTotal += 11;
-                        }
-                        else
-                        {
-                            playerTotal += 1;
-                        }
+                        playerTotal = (playerTotal <= 10) ? playerTotal += 11 : playerTotal += 1;
                     }
                     else
                     {
@@ -598,6 +583,11 @@ internal class Program
                     playerTotal = 0;
                     dealerTotal = 0;
                 }
+
+            }
+            else if (userInput == "RPS")
+            {
+                Console.WriteLine("wip");
 
             }
             else
