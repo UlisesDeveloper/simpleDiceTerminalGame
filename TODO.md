@@ -1,0 +1,2 @@
+- Fix Bug when exiting and reentering BlackJack where the music doesn't start playing
+- Fix the UI a bit, it's quite ugly tbh

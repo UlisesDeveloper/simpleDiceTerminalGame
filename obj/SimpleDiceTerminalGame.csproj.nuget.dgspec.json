@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj": {}
+    "C:\\Users\\ulise\\Documents\\GitHub\\simpleTerminalLuckGames\\SimpleDiceTerminalGame.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj": {
+    "C:\\Users\\ulise\\Documents\\GitHub\\simpleTerminalLuckGames\\SimpleDiceTerminalGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj",
+        "projectUniqueName": "C:\\Users\\ulise\\Documents\\GitHub\\simpleTerminalLuckGames\\SimpleDiceTerminalGame.csproj",
         "projectName": "SimpleDiceTerminalGame",
-        "projectPath": "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\SimpleDiceTerminalGame.csproj",
+        "projectPath": "C:\\Users\\ulise\\Documents\\GitHub\\simpleTerminalLuckGames\\SimpleDiceTerminalGame.csproj",
         "packagesPath": "C:\\Users\\ulise\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ulise\\Desktop\\jic\\SimpleDiceTerminalGame\\obj\\",
+        "outputPath": "C:\\Users\\ulise\\Documents\\GitHub\\simpleTerminalLuckGames\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "NAudio": {
+              "target": "Package",
+              "version": "[2.2.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

@@ -2,21 +2,29 @@
 using System.Threading;
 using System.Drawing;
 using System.Runtime.Serialization;
+using System.Data.Common;
+using System.Media;
+using NAudio.Wave;
 
 internal class Program
 {
+    private static WaveOutEvent outputDevice;
+    private static bool isPlaying = true;
     private static void Main(string[] args)
     {
-        Console.WriteLine("Program made by Ulises");
-        Console.WriteLine("MIT License Copyright (c) 2023 Ulises Romero López");
-        Console.WriteLine("website: https://ulises.tech");
-        Console.WriteLine("reddit: https:/reddit.com/user/ulisesdeveloper");
-        Console.WriteLine($"twitter: https:/x.com/ulisesdev \n \n \n");
-        Thread.Sleep(1000);
+        Console.Clear();
+        Console.WriteLine(@"
+                         Program made by Ulises
+                         MIT License Copyright (c) 2023 Ulises Romero López
+                         website: https://ulises.tech
+                         reddit: https:/reddit.com/user/ulisesdeveloper
+                         twitter: https:/x.com/ulisesdev");
+        Thread.Sleep(5000);
+        Console.Clear();
 
         while (true)
         {
-            Console.WriteLine("TYPE EITHER \"DICE\" OR \"COIN\" TO CHOOSE WHICH GAME TO PLAY // OR \"OTHER\" TO EXIT OR VIEW OTHER OPTIONS");
+            Console.WriteLine("TYPE EITHER \"DICE\", \"COIN\" OR \"BLACKJACK\" TO CHOOSE WHICH GAME TO PLAY // OR \"OTHER\" TO EXIT OR VIEW OTHER OPTIONS");
             string userInput = Console.ReadLine().ToUpper(); // Read user input and convert to uppercase
 
             if (userInput == "OTHER")
@@ -37,8 +45,8 @@ internal class Program
                     string innerInput = Console.ReadLine().ToUpper(); // Capture the user's choice inside the loop
                     if (innerInput == "BACK")
                     {
-                    Thread.Sleep(200);
-                    otherOption = false;
+                        Thread.Sleep(200);
+                        otherOption = false;
                     }
                     if (innerInput == "LICENSE")
                     {
@@ -69,28 +77,28 @@ internal class Program
                          OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
                          SOFTWARE. ");
 
-                         Console.WriteLine("\n\n\n");
-                         Thread.Sleep(500);
-                        while(licenseBack)
+                        Console.WriteLine("\n\n\n");
+                        Thread.Sleep(500);
+                        while (licenseBack)
                         {
-                         Console.WriteLine();
-                         Console.WriteLine("Type in \"BACK\" to go back: ");
-                         string input = Console.ReadLine();
-                         if (input == "BACK")
-                         {
-                            Console.Clear();
-                            licenseBack = false;
-                         }
-                         else
-                         {
-                            
-                            Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
-                         }
+                            Console.WriteLine();
+                            Console.WriteLine("Type in \"BACK\" to go back: ");
+                            string input = Console.ReadLine();
+                            if (input == "BACK")
+                            {
+                                Console.Clear();
+                                licenseBack = false;
+                            }
+                            else
+                            {
+
+                                Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
+                            }
 
                         }
                     }
                     if (innerInput == "CREDITS")
-                    { 
+                    {
                         Console.Clear();
                         bool creditsBack = true;
                         Console.WriteLine("\n\n");
@@ -98,22 +106,29 @@ internal class Program
                         Console.WriteLine("Program made by Ulises");
                         Console.WriteLine("website: https://ulises.tech");
                         Console.WriteLine("reddit: https:/reddit.com/user/ulisesdeveloper");
-                        Console.WriteLine($"twitter: https:/x.com/ulisesdev \n \n \n");
+                        Console.WriteLine($"twitter: https:/x.com/ulisesdev\n\n\nEVERYTHING USED IN THIS PROJECT:");
+                        Console.WriteLine("Libraries:");
+                        Console.WriteLine("NAudio for audio playback | https://github.com/naudio/NAudio");
+                        Console.WriteLine("\n\nCasino Music:");
+                        Console.WriteLine("Gotta Go by Tokyo Music Walker | https://soundcloud.com/user-356546060");
+                        Console.WriteLine("Music promoted by https://www.free-stock-music.com");
+                        Console.WriteLine("Creative Commons / Attribution 3.0 Unported License (CC BY 3.0)");
+                        Console.WriteLine("https://creativecommons.org/licenses/by/3.0/deed.en_US");
                         Thread.Sleep(500);
-                        while(creditsBack)
+                        while (creditsBack)
                         {
-                        Console.WriteLine();
-                        Console.WriteLine("Type in \"BACK\" to go back: ");
-                         if (Console.ReadLine() == "BACK")
-                         {
-                            Console.Clear();
-                            creditsBack = false;
-                         }
-                         else
-                         {
-                            
-                            Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
-                         }
+                            Console.WriteLine();
+                            Console.WriteLine("Type in \"BACK\" to go back: ");
+                            if (Console.ReadLine() == "BACK")
+                            {
+                                Console.Clear();
+                                creditsBack = false;
+                            }
+                            else
+                            {
+
+                                Console.WriteLine("\nINPUT NOT RECOGNIZED, TRY TYPING \"BACK\" AGAIN IN UPPERCASE");
+                            }
 
                         }
                     }
@@ -122,7 +137,7 @@ internal class Program
                         Environment.Exit(1);
                     }
 
-                 Console.Clear();
+                    Console.Clear();
 
                 }
 
@@ -249,6 +264,341 @@ internal class Program
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ResetColor();
                 Console.WriteLine();  //console color reset, sometimes it's buggy and it doesn't reset fully
+            }
+            else if (userInput == "BLACKJACK")
+            {
+                Thread audioThread = new Thread(PlayCasinoAudio);
+                
+                audioThread.Start();
+
+                string[] cards = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+                int number = 0;
+                int dealerTotal = 0;
+                int playerTotal = 0;
+                decimal bet = 0;
+                decimal wallet = 100;
+                string input = "";
+                while (true)
+                {
+
+                    Console.Clear();
+                    Console.WriteLine("Welcome to the Casino, It's BlackJack Time! Place your bets");
+                    while (true)
+                    {
+                        if (wallet == 0)
+                        {
+                            Console.WriteLine("You've lost all your money, the house always wins.");
+                            StopCasinoAudio();
+                            break;
+                        }
+                        Console.WriteLine($"Balance: ${wallet}");
+                        Console.WriteLine("\nType In \"N\" to go back or Input your bet: ");
+                        input = Console.ReadLine().ToLower();
+                        if (input == "n")
+                        {
+                            Console.Clear();
+                            StopCasinoAudio();
+                            break;
+                        }
+                        else
+                        {
+
+                            if (decimal.TryParse(input, out bet))
+                            {
+                                if (wallet >= bet)
+                                {
+                                    Console.WriteLine($"Inputted bet: ${bet}");
+                                    game();
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine($"Bet can't be bigger than ur wallet's balance");
+                                    bet = 0;
+                                    Console.WriteLine("Input a valid bet!");
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Input a valid value!");
+                            }
+
+                        }
+
+
+
+
+                    }
+                    break;
+
+
+
+                }
+
+
+
+                static void PlayCasinoAudio()
+                {
+                    
+                    using (var audioFile = new Mp3FileReader("tokyo-music-walker-gotta-go.mp3"))
+                    using (var outputDevice = new WaveOutEvent())
+                    {
+                        outputDevice.Init(audioFile);
+
+                        //Loop 
+                        while (true)
+                        {
+                            outputDevice.Play();
+
+                            //wait for playback to complete
+                            while (isPlaying && outputDevice.PlaybackState == PlaybackState.Playing)
+                            {
+                                Thread.Sleep(100); // Sleep to reduce CPU usage
+                            }
+
+                            //If playback stopped, reset position and restart
+                            audioFile.Position = 0;
+                        }
+                    }
+                }
+
+                static void StopCasinoAudio()
+                {
+                    isPlaying = false; //Stop playback loop
+                    if (outputDevice != null)
+                    {
+                        
+                        outputDevice.Stop();
+                        outputDevice.Dispose();
+                    }
+                }
+
+
+
+
+
+                void game()
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Balance: ${wallet} // Current Bet: ${bet} \n");
+                    pulledDealer();
+                    Console.WriteLine($"Dealer's shown card is {dealerTotal}");
+                    pulledDealer();
+                    pulledPlayer();
+                    pulledPlayer();
+                    Console.WriteLine($"Your starting total is {playerTotal} \n");
+                    while (playerTotal <= 21)
+                    {
+                        Console.WriteLine("Choose between \"HIT\" and \"STAND\"");
+                        string? userDecision = Console.ReadLine().ToUpper();
+                        if (userDecision == "HIT")
+                        {
+                            pulledPlayer();
+                            Console.WriteLine($"Your total is {playerTotal}");
+                        }
+                        else if (userDecision == "STAND")
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"Balance: ${wallet} // Current Bet: ${bet} // Your Total: {playerTotal} \n");
+                            Console.WriteLine($"DEALER SHOWS HIS SECOND CARD, his new total is... {dealerTotal}");
+                            break;
+                        }
+                        else
+                        {
+                            while (true)
+                            {
+                                Console.WriteLine("Input not recognized, try again");
+                                break;
+                            }
+                        }
+
+
+
+                    }
+
+
+                    if (playerTotal > 21)
+                    {
+                        Console.WriteLine("You lose!");
+                        wallet -= bet;
+                        resetValues();
+                    }
+                    else
+                    {
+
+                        while (dealerTotal <= 16)
+                        {
+                            pulledDealer();
+                            Console.WriteLine($"Dealer get's a new card, and he's total is... {dealerTotal}");
+                            if (playerTotal == dealerTotal)
+                            {
+                                Console.WriteLine("It's a Draw");
+                                resetValues();
+                                break;
+                            }
+                            else if (dealerTotal > 21)
+                            {
+                                Console.WriteLine("DEALER BUST, You Win! \n");
+                                wallet += bet;
+                                resetValues();
+                                Thread.Sleep(3000);
+                                Console.WriteLine("GOING BACK TO THE MENU IN 3");
+                                Thread.Sleep(1000);
+                                Console.WriteLine("GOING BACK TO THE MENU IN 2");
+                                Thread.Sleep(1000);
+                                Console.WriteLine("GOING BACK TO THE MENU IN 1");
+                                Thread.Sleep(1000);
+                                Console.Clear();
+                                resetValues();
+                                break;
+
+                            }
+
+                        }
+
+                        if (dealerTotal > 21 || playerTotal > dealerTotal)
+                        {
+                            Console.WriteLine("You win!");
+                            wallet += bet;
+                            resetValues();
+                        }
+                        else if (dealerTotal > playerTotal)
+                        {
+                            Console.WriteLine("You lose!");
+                            wallet -= bet;
+                            resetValues();
+                        }
+                        resetValues();
+                    }
+                }
+
+                void pulledDealer()
+                {
+                    int pull = 0;
+                    number = cardGen();
+                    if (number == 0)
+                    {
+                        if (dealerTotal == 10)
+                        {
+                            dealerTotal += 11;
+                        }
+                        else
+                        {
+                            dealerTotal += 1;
+                        }
+                        pull = 1;
+                    }
+                    else
+                    {
+                        dealerTotal += number;
+                    }
+
+                }
+                void pulledPlayer()
+                {
+                    int pull = 0;
+                    number = cardGen();
+                    if (number == 0)
+                    {
+                        if (playerTotal <= 10)
+                        {
+                            playerTotal += 11;
+                        }
+                        else
+                        {
+                            playerTotal += 1;
+                        }
+                    }
+                    else
+                    {
+                        playerTotal += number;
+                    }
+
+                }
+                int cardGen()
+                {
+                    Random random = new Random();
+                    int numCardPulled = random.Next(cards.Length);
+                    int cardPulled = 0;
+                    switch (numCardPulled)
+                    {
+                        case 1:
+                            {
+                                cardPulled = 1;
+                                break;
+                            }
+                        case 2:
+                            {
+                                cardPulled = 2;
+                                break;
+                            }
+                        case 3:
+                            {
+                                cardPulled = 3;
+                                break;
+                            }
+                        case 4:
+                            {
+                                cardPulled = 4;
+                                break;
+                            }
+                        case 5:
+                            {
+                                cardPulled = 5;
+                                break;
+                            }
+                        case 6:
+                            {
+                                cardPulled = 6;
+                                break;
+                            }
+                        case 7:
+                            {
+                                cardPulled = 7;
+                                break;
+                            }
+                        case 8:
+                            {
+                                cardPulled = 8;
+                                break;
+                            }
+                        case 9:
+                            {
+                                cardPulled = 9;
+                                break;
+                            }
+                        case 10:
+                            {
+                                cardPulled = 10;
+                                break;
+                            }
+                        case 11:
+                            {
+                                cardPulled = 10;
+                                break;
+                            }
+                        case 12:
+                            {
+                                cardPulled = 10;
+                                break;
+                            }
+                        case 13:
+                            {
+                                cardPulled = 0;
+                                break;
+                            }
+
+                    }
+                    return cardPulled;
+
+                }
+                void resetValues()
+                {
+                    playerTotal = 0;
+                    dealerTotal = 0;
+                }
+
             }
             else
             {
