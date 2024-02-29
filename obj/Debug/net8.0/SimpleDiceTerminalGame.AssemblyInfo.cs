@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SimpleDiceTerminalGame")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+446d2f48d15b4102d6e08f9f6784becfd42c6d7f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+678e9b8584a579bc110d33e52de383d63b361d8f")]
 [assembly: System.Reflection.AssemblyProductAttribute("SimpleDiceTerminalGame")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SimpleDiceTerminalGame")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
