@@ -44,7 +44,7 @@ internal class Program
             Console.ForegroundColor = ConsoleColor.White;
 
             Console.WriteLine("Type in a NUMBER to travel to that option:");
-            
+
             string userInput = Console.ReadLine().ToUpper(); // Read user input and convert to uppercase
 
             if (userInput == "5")
@@ -216,11 +216,16 @@ internal class Program
             }
             else if (userInput == "1")
             {
+                int playerWon = 0;
+                int cpuWon = 0;
+                while (true)
+                {
                 Console.Clear();
                 Random dice = new Random();
                 int dice1 = dice.Next(1, 7);
                 int dice2 = dice.Next(1, 7);
                 int dice3 = dice.Next(1, 7);
+                counter();
                 Thread.Sleep(400);
                 Console.Write($"First die: {dice1} / Second die: {dice2} / Third die: {dice3}\n");
                 Thread.Sleep(1000);
@@ -288,6 +293,13 @@ internal class Program
                 string wait = Console.ReadLine();
                 Console.WriteLine();  //console color reset, sometimes it's buggy and it doesn't reset fully
                 Console.Clear();
+                }
+
+                
+                void counter()
+                {
+                    Console.WriteLine($"Matches Won {playerWon} / Matches Lost {cpuWon}\n");
+                }
             }
             else if (userInput == "3")
             {
