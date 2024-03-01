@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Media;
 using NAudio.Wave;
 using NAudio.Wave.Asio;
+using System.IO.Pipes;
 
 internal class Program
 {
@@ -55,12 +56,12 @@ internal class Program
                 {
                     Console.WriteLine();
                     Console.WriteLine();
-                    Console.WriteLine("What do you wish to do?,");
+                    Console.WriteLine("What do you wish to do?,\n");
                     Console.WriteLine("- BACK (Go back to the main menu)");
                     Console.WriteLine("- LICENSE (View License)");
                     Console.WriteLine("- CREDITS (View Credits)");
                     Console.WriteLine("- EXIT (Exit the Program)");
-                    Console.WriteLine("\nType in your option: ");
+                    Console.WriteLine("\n\nType in your option: ");
 
                     string innerInput = Console.ReadLine().ToUpper(); // Capture the user's choice inside the loop
                     if (innerInput == "BACK")
@@ -167,138 +168,185 @@ internal class Program
             {
                 Console.Clear();
                 bool repeat = true;
+                float playerWon = 0;
+                float cpuWon = 0;
+                
+                int headsCount = 0;
+                int tailsCount = 0;
                 string coinGuess = "";
 
                 while (repeat)
                 {
+                    Console.Clear();
                     Random coin = new Random();
                     int flip = coin.Next(1, 3);
-
-                    Console.WriteLine("CHOOSE BETWEEN \"HEADS\" OR \"TAILS\" (OR \"BACK\" TO GO BACK): ");
+                    counter();
+                    Console.WriteLine("CHOOSE BETWEEN \"H\" FOR HEADS OR \"T\" FOR TAILS (OR \"B\" TO GO BACK): ");
                     coinGuess = Console.ReadLine().ToUpper();
 
-                    if (coinGuess == "BACK")
+                    if (coinGuess == "B")
                     {
                         Console.Clear();
                         repeat = false;
                     }
-                    else if (coinGuess == "HEADS" || coinGuess == "TAILS")
+                    else if (coinGuess == "H" || coinGuess == "T")
                     {
+                        Console.Clear();
+                        counter();
                         Console.WriteLine($"\n\nAnd it is...");
                         Thread.Sleep(1000); // 1 second pause
                         Console.WriteLine("...");
                         Thread.Sleep(1000); // 1 second pause
 
-                        if ((coinGuess == "HEADS" && flip == 1) || (coinGuess == "TAILS" && flip == 2))
+                        if ((coinGuess == "H" && flip == 1) || (coinGuess == "T" && flip == 2))
                         {
-                            Console.WriteLine((flip == 1) ? "HEADS!!!" : "TAILS!!!");
+                            Console.WriteLine((flip == 1) ? "HEADS!!!" : "TAILS!!!\n");
                             Console.BackgroundColor = ConsoleColor.DarkGreen;
                             Thread.Sleep(333);
                             Console.WriteLine("You won :D");
                             Console.ResetColor();
+                            playerWon++;
+                            wonWith();
+                            oneMore();
                         }
                         else
                         {
-                            Console.WriteLine((flip == 1) ? "HEADS!!!" : "TAILS!!!");
+                            Console.WriteLine((flip == 1) ? "HEADS!!!" : "TAILS!!!\n");
                             Console.BackgroundColor = ConsoleColor.Red;
                             Thread.Sleep(333);
                             Console.WriteLine("You lost D:");
                             Console.ResetColor();
+                            cpuWon++;
+                            oneMore();
                         }
                     }
                     else
                     {
-                        Console.WriteLine("INPUT NOT RECOGNIZED, TRY TYPING \"HEADS\", \"TAILS\" OR \"EXIT\" IN UPPERCASE");
+                        Console.WriteLine("INPUT NOT RECOGNIZED, TRY TYPING \"H\" FOR HEADS, \"T\" FOR TAILS OR \"EXIT\" IN UPPERCASE");
                     }
 
-                    Console.WriteLine();
+                    
+                }
+                void wonWith()
+                {
+                    if (coinGuess == "H")
+                    {
+                        headsCount++;
+                    }
+                    else if (coinGuess == "T")
+                    {
+                        tailsCount++;
+                    }
+                }
+                void counter()
+                {
+                    float winPerc = (playerWon / (playerWon + cpuWon)) * 100;
+                    try
+                    {
+                        Console.WriteLine($"Matches Won {playerWon} / Matches Lost {cpuWon} // Won with HEADS {headsCount} / Won with TAILS {tailsCount} // Win %: {(float)Math.Round(winPerc, 2)}% ({playerWon}/{cpuWon+playerWon})\n");
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                void oneMore()
+                {
+                    Console.WriteLine("\nPress \"ENTER\" play again, or type in \"B\" to go back to the main menu:");
+                    string wait = Console.ReadLine().ToUpper();
+                    if (wait == "B")
+                    {
+                        Console.WriteLine();
+                        Console.Clear();
+                        repeat = false;
+                    }
+                    Console.WriteLine();  //console color reset, sometimes it's buggy and it doesn't reset fully
+                    Console.Clear();
                 }
             }
             else if (userInput == "1")
             {
                 int playerWon = 0;
-                int cpuWon = 0;
+                int playerLost = 0;
                 while (true)
                 {
-                Console.Clear();
-                Random dice = new Random();
-                int dice1 = dice.Next(1, 7);
-                int dice2 = dice.Next(1, 7);
-                int dice3 = dice.Next(1, 7);
-                counter();
-                Thread.Sleep(400);
-                Console.Write($"First die: {dice1} / Second die: {dice2} / Third die: {dice3}\n");
-                Thread.Sleep(1000);
-                int total = dice1 + dice2 + dice3;
-                Console.WriteLine($"The result of the sum of all dice without bonuses is {total}");
-                Thread.Sleep(2500);
-
-                if (dice1 == dice2 || dice1 == dice3 || dice2 == dice3)
-                {
-                    total += 2;
-                }
-
-                if (dice1 == dice2 && dice2 == dice3)
-                {
-                    total += 6;
-                }
-
-                Console.WriteLine($"The result of the sum of all dice with bonuses is {total}");
-                if (dice1 == dice2 || dice1 == dice3 || dice2 == dice3)
-                {
-                    total += 2;
-                }
-                //sum of 2 points if either of those 3 conditions are met
+                    Console.Clear();
+                    Random dice = new Random();
+                    int dice1 = dice.Next(1, 7);
+                    int dice2 = dice.Next(1, 7);
+                    int dice3 = dice.Next(1, 7);
+                    counter();
+                    Thread.Sleep(400);
+                    Console.Write($"First die: {dice1} / Second die: {dice2} / Third die: {dice3}\n\n");
+                    Thread.Sleep(1000);
+                    int total = dice1 + dice2 + dice3;
+                    Console.WriteLine($"The result of the sum of all dice without bonuses is {total}");
+                    Thread.Sleep(1000);
 
 
-                if (dice1 == dice2 && dice2 == dice3)
-                {
-                    total += 6;
-                }
-                //sum of 6 points if both conditions are met
 
-                Console.WriteLine($" and with bonuses is {total}");
-
-                if (total >= 15)
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine("You won");
-
-                    if (total - 15 == 0)
+                    if (dice1 == dice2 && dice2 == dice3)
                     {
-                        Console.BackgroundColor = ConsoleColor.DarkYellow;
-                        Console.WriteLine($"You won without any extra points, :)");
+                        total += 6;
+                    }
+
+                    if (dice1 == dice2 || dice1 == dice3 || dice2 == dice3)
+                    {
+                        total += 2;
+                    }
+
+
+                    Console.WriteLine($"The result of the sum of all dice with bonuses is {total}\n");
+                    Thread.Sleep(1000);
+
+                    if (total >= 15)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("You won");
+
+                        if (total - 15 == 0)
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkYellow;
+                            Console.WriteLine($"You won without any extra points, :)");
+
+                        }
+                        else
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkYellow;
+                            Console.WriteLine($"You won with {total - 15} extra points, :)");
+                        }
+                        Console.ResetColor();
+                        playerWon++;
 
                     }
                     else
                     {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.WriteLine("You lost");
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
-                        Console.WriteLine($"You won with {total - 15} extra points, :)");
+                        Console.WriteLine($"You were {15 - total} points away, :("); Console.ResetColor();
+                        playerLost++;
+
                     }
+
+                    Console.BackgroundColor = ConsoleColor.Black;
                     Console.ResetColor();
-
-                }
-                else
-                {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You lost");
-                    Console.BackgroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine($"You were {15 - total} points away, :("); Console.ResetColor();
-
-                }
-
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ResetColor();
-                Console.WriteLine("Type in anything to go back to the main menu:");
-                string wait = Console.ReadLine();
-                Console.WriteLine();  //console color reset, sometimes it's buggy and it doesn't reset fully
-                Console.Clear();
+                    Console.WriteLine("\nPress \"ENTER\" play again, or type in \"B\" to go back to the main menu:");
+                    string wait = Console.ReadLine().ToUpper();
+                    if (wait == "B")
+                    {
+                        Console.WriteLine();
+                        Console.Clear();
+                        break;
+                    }
+                    Console.WriteLine();  //console color reset, sometimes it's buggy and it doesn't reset fully
+                    Console.Clear();
                 }
 
-                
+
                 void counter()
                 {
-                    Console.WriteLine($"Matches Won {playerWon} / Matches Lost {cpuWon}\n");
+                    Console.WriteLine($"Matches Won {playerWon} / Matches Lost {playerLost}\n");
                 }
             }
             else if (userInput == "3")
@@ -328,9 +376,9 @@ internal class Program
                             break;
                         }
                         Console.WriteLine($"Balance: ${wallet}");
-                        Console.WriteLine("\nType In \"N\" to go back or Input your bet: ");
+                        Console.WriteLine("\nType In \"B\" to go back to the main menu or Input your bet: ");
                         input = Console.ReadLine().ToLower();
-                        if (input == "n")
+                        if (input == "B")
                         {
                             Console.Clear();
                             StopCasinoAudio();
@@ -620,13 +668,15 @@ internal class Program
             {
                 int playerWon = 0;
                 int cpuWon = 0;
-                while (true)
+                bool replayCondition = true;
+                string pick = "";
+                while (replayCondition)
                 {
                     Console.Clear();
                     int elementGen = 33;
 
                     counter();
-                    Console.WriteLine("Type \"BACK\" to go Back or");
+                    Console.WriteLine("Type in \"B\" to go Back or");
                     Console.WriteLine("Choose between \"R\" for Rock \"P\" for Paper or \"S\" for Scissors:");
                     string input = Console.ReadLine().ToUpper();
                     if (input == "R")
@@ -634,21 +684,27 @@ internal class Program
                         Console.Clear();
                         counter();
                         Console.WriteLine("You chose ROCK");
+                        pick = "ROCK";
                         gameResult();
+                        replay();
                     }
                     else if (input == "P")
                     {
                         Console.Clear();
                         counter();
                         Console.WriteLine("You chose PAPER");
+                        pick = "PAPER";
                         gameResult();
+                        replay();
                     }
                     else if (input == "S")
                     {
                         Console.Clear();
                         counter();
                         Console.WriteLine("You chose SCISSORS");
+                        pick = "SCISSORS";
                         gameResult();
+                        replay();
                     }
                     else if (input == "B" || input == "BACK")
                     {
@@ -656,6 +712,7 @@ internal class Program
                     }
                     else
                     {
+
                         Console.WriteLine("Input not recognized, Try Again!");
                         Thread.Sleep(1600);
                         Console.Clear();
@@ -677,30 +734,23 @@ internal class Program
                         Console.WriteLine();
                         if (((input == "R") && (elementGen == 2)) || ((input == "P") && (elementGen == 0)) || ((input == "S") && (elementGen == 1)))
                         {
+                            Console.BackgroundColor = ConsoleColor.Green;
                             Console.WriteLine("You WIN! :D\n");
+                            Console.ResetColor();
                             playerWon++;
                         }
                         else if (((input == "R") && (elementGen == 0)) || ((input == "P") && (elementGen == 1)) || ((input == "S") && (elementGen == 2)))
                         {
-                            Console.WriteLine($"You both chose {input}, It's a DRAW!\n");
+                            Console.BackgroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine($"You both chose {pick}, It's a DRAW!\n");
+                            Console.ResetColor();
                         }
                         else if (((input == "R") && (elementGen == 1)) || ((input == "P") && (elementGen == 2)) || ((input == "S") && (elementGen == 0)))
                         {
+                            Console.BackgroundColor = ConsoleColor.Red;
                             Console.WriteLine("You LOST! :(\n");
+                            Console.ResetColor();
                             cpuWon++;
-                        }
-                        while (goBack)
-                        {
-                            Console.WriteLine("Type in \"B\" to go back to the Rock Paper Scissors Menu: ");
-                            string inputed = Console.ReadLine().ToUpper();
-                            if (inputed == "B")
-                            {
-                                goBack = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Input not recognized, Try Again!");
-                            }
                         }
                         void cpuPick()
                         {
@@ -708,16 +758,25 @@ internal class Program
                             elementGen = random.Next(0, 2);
                             if (elementGen == 0)
                             {
-                                Console.WriteLine("The CPU chooses Rock!");
+                                Console.WriteLine("The CPU chooses ROCK!");
                             }
                             else if (elementGen == 1)
                             {
-                                Console.WriteLine("The CPU chooses Paper!");
+                                Console.WriteLine("The CPU chooses PAPER!");
                             }
                             else if (elementGen == 2)
                             {
-                                Console.WriteLine("The CPU chooses Scissors!");
+                                Console.WriteLine("The CPU chooses SCISSORS!");
                             }
+                        }
+                    }
+                    void replay()
+                    {
+                        Console.WriteLine("Press \"ENTER\" to Play Again or type in \"B\" to go back to the main menu:");
+                        string inputed = Console.ReadLine().ToUpper();
+                        if (inputed == "B")
+                        {
+                            replayCondition = false;
                         }
                     }
 
